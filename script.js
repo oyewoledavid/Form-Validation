@@ -68,7 +68,9 @@ function checkInput() {
     setSuccessFor(password);
   }
 
-  if (confirmPasswordValue != passwordValue) {
+  if (confirmPasswordValue === "") {
+    setErrorFor(confirmPassword, "Password cannot be empty");
+  } else if (confirmPasswordValue != passwordValue) {
     setErrorFor(confirmPassword, "Password does not match");
   } else {
     setSuccessFor(confirmPassword);
@@ -111,7 +113,9 @@ function validDob() {
   const cutOff18 = new Date();
   cutOff18.setFullYear(todayYear - 18);
 
-  if (!regexTest) {
+  if (dateOfBirthValue === "") {
+    setErrorFor(dateOfBirth, "Date of birth cannot be blank");
+  } else if (!regexTest) {
     setErrorFor(dateOfBirth, "enter date of birth as dd/mm/yyyy");
   } else if (isNaN(userBirthDate)) {
     setErrorFor(dateOfBirth, "date of birth is invalid");
