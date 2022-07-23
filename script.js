@@ -26,6 +26,7 @@ const database = getDatabase(app)
 const auth = getAuth();
   
 document.getElementById("submit").addEventListener('click', (e) => {
+  e.submit()
     var email = document.getElementById('email').value
     var password = document.getElementById('password').value
     var username = document.getElementById('username').value
@@ -36,7 +37,8 @@ document.getElementById("submit").addEventListener('click', (e) => {
         const user = userCredential.user;
         set(ref(database, 'users/' + user.uid), {
           username: username,
-          email:email
+          email: email,
+          password: password
         })
         alert( user + 'user created')
         // ...
