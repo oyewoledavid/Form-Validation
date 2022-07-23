@@ -1,60 +1,62 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
+import {
+  getDatabase,
+  set,
+  ref, update
+} from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
-import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-  } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCh0YDE8uMfIbUSi2qK6gkdBrvqMq3iO7M",
+  authDomain: "form-authentication-f0a32.firebaseapp.com",
+  databaseURL: "https://form-authentication-f0a32-default-rtdb.firebaseio.com",
+  projectId: "form-authentication-f0a32",
+  storageBucket: "form-authentication-f0a32.appspot.com",
+  messagingSenderId: "631471451920",
+  appId: "1:631471451920:web:f1993d6bc9d58a28243f95",
+};
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCh0YDE8uMfIbUSi2qK6gkdBrvqMq3iO7M",
-    authDomain: "form-authentication-f0a32.firebaseapp.com",
-    databaseURL: "https://form-authentication-f0a32-default-rtdb.firebaseio.com",
-    projectId: "form-authentication-f0a32",
-    storageBucket: "form-authentication-f0a32.appspot.com",
-    messagingSenderId: "631471451920",
-    appId: "1:631471451920:web:f1993d6bc9d58a28243f95"
-  };
-
-  // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app)
+const database = getDatabase(app);
 const auth = getAuth();
-  
-document.getElementById("submit").addEventListener('click', (e) => {
-  e.submit()
-    var email = document.getElementById('email').value
-    var password = document.getElementById('password').value
-    var username = document.getElementById('username').value
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        set(ref(database, 'users/' + user.uid), {
-          username: username,
-          email: email,
-          password: password
-        })
-        alert( user + 'user created')
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+document.getElementById("submit").addEventListener("click", (e) => {
+  e.submit();
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  var username = document.getElementById("username").value;
 
-        alert(errorMessage)
-        // ..
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      set(ref(database, "users/" + user.uid), {
+        username: username,
+        email: email,
+        password: password,
       });
-})
+      alert(username + "user created");
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
 
+      alert(errorMessage);
+      // ..
+    });
+});
 
-
-
+//SIGN IN
 
 
 //Global variables
@@ -71,8 +73,6 @@ const confirmPassword = document.getElementById("confirmPassword");
 
 form.addEventListener("submit", (e) => {
   checkInput();
-
-
 
   if (isFormValid() == true) {
     form.submit();
@@ -103,7 +103,6 @@ function checkInput() {
   const passwordValue = password.value.trim();
   const confirmPasswordValue = confirmPassword.value.trim();
 
-
   let firstnameregex = /^[a-zA-Z\s]+$/;
   let lastnameregex = /^[a-zA-Z\s]+$/;
   //Validate First Name
@@ -111,17 +110,15 @@ function checkInput() {
     setErrorFor(firstName, "First name cannot be blank");
   } else if (!firstnameregex.test(firstNameValue)) {
     setErrorFor(firstName, "Invalid First Name");
-  }
-  else {
+  } else {
     setSuccessFor(firstName);
   }
   //Validate Last Name
   if (lastNameValue === "") {
     setErrorFor(lastName, "First name cannot be blank");
-  }  else if (!lastnameregex.test(lastNameValue)) {
+  } else if (!lastnameregex.test(lastNameValue)) {
     setErrorFor(lastName, "Invalid Last Name");
-  }
-  else {
+  } else {
     setSuccessFor(lastName);
   }
 
